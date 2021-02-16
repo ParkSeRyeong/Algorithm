@@ -28,8 +28,6 @@ public class BOJ_2346_Airballoon {
 
 		for (int i = 0; i < N - 1; i++) {
 			if (inBalloon < 0) {
-//				index += (N + inBalloon);
-//				index %= N;
 				for (int j = 0; j < Math.abs(inBalloon); j++) {
 					if (index == 0)
 						index = N;
@@ -39,8 +37,6 @@ public class BOJ_2346_Airballoon {
 					}
 				}
 			} else {
-//				index += (inBalloon % N);
-//				index %= N;
 				for (int j = 0; j < inBalloon; j++) {
 					if (index == N - 1)
 						index = -1;

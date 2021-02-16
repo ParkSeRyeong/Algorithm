@@ -20,6 +20,7 @@ public class Problem02_MakeOne {
 		// [0] : 나누고 남은 수
 		// [1] : 그 수에 도달하는데까지의 횟수
 		q.offer(new int[] { N, 0 });
+		
 		while (!q.isEmpty()) {
 			int out = q.peek()[0];
 			if (q.peek()[0] == 1) {
