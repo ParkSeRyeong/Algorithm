@@ -20,11 +20,21 @@ class Pos {
 	public Pos() {
 	}
 
+	public Pos(int r, int c) {
+		this.r = r;
+		this.c = c;
+	}
+
 	public Pos(int r, int c, int ice) {
 		super();
 		this.r = r;
 		this.c = c;
 		this.ice = ice;
+	}
+
+	@Override
+	public String toString() {
+		return r + " " + c + " " + " : " + ice;
 	}
 
 }
@@ -35,49 +45,64 @@ public class BOJ_2573_Iceberg_Queue {
 	static int year = 0;
 	static int[] dr = { -1, 1, 0, 0 };
 	static int[] dc = { 0, 0, -1, 1 };
-	static Queue<Pos> q = new LinkedList<>();
+	static Queue<Pos> queue = new LinkedList<>();
 	static ArrayList<Pos> list = new ArrayList<>();
 
+	/** 한 번에 녹게 하기 위한 메서드. */
 	public static void makeZero() {
-		int size = q.size();
-		for (int i = 0; i < size; i++) {
-			Pos tmp = q.poll();
+		Iterator<Pos> iter = queue.iterator();
+		while (iter.hasNext()) {
+			Pos tmp = iter.next();
 			map[tmp.r][tmp.c] = tmp.ice;
 
-			if (tmp.ice != 0) {
-				q.offer(tmp);
+			if (tmp.ice == 0) {
+				iter.remove();
 			}
 		}
 
 	}
 
-	public static void print() {
-		for (int[] i : map) {
-			for (int j : i) {
-				System.out.print(j + " ");
-			}
-			System.out.println();
-		}
-	}
-
-	/** 0으로 둘러싸여있으면 false, 하나라도 이어져있으면 true */
+	/** 인접한 노드를 쭉 따라가다가, 더 이상 없을 때 그 떄까지의 cnt가 빙산 개수랑 같으면 true */
 	public static boolean isCombined() {
-		Iterator<Pos> iter = q.iterator();
-		while (iter.hasNext()) {
-			boolean zeros = false;
-			Pos ice = iter.next();
-			for (int i = 0; i < 4; i++) {
-				int nr = ice.r + dr[i];
-				int nc = ice.c + dc[i];
 
-				// 인접노드가 범위 아웃이거나 바다가 아닌 빙산이면(!=0)
-				if (nr >= 0 && nc >= 0 && nr < row && nc < col && map[nr][nc] != 0)
-					zeros = true;
+		// 큐 사이즈 = 현재 남아있는 빙산 개수
+		int icebergCnt = queue.size();
+
+		// 방문 정보 배열
+		boolean[][] visit = new boolean[row][col];
+
+		// 빙산 위치가 있는 큐 queue랑 별개로, 남아있는 빙산들로 BFS를 진행할 큐 생성
+		Queue<Pos> remain = new LinkedList<>();
+
+		// 1. 일단 시작위치 하나 넣어주고 시작
+		remain.offer(queue.peek());
+		visit[queue.peek().r][queue.peek().c] = true;
+
+		int cnt = 1;
+
+		// 2. 빙산 큐가 빌 때까지 반복
+		while (!remain.isEmpty()) {
+			Pos tmp = remain.poll();
+			for (int i = 0; i < 4; i++) {
+				int nr = tmp.r + dr[i];
+				int nc = tmp.c + dc[i];
+
+				// 3. 범위 안 + 방문도 안 했고 + 맵도 바다가 아닌 빙산이면
+				if (nr >= 0 && nc >= 0 && nr < row && nc < col && !visit[nr][nc] && map[nr][nc] != 0) {
+
+					// 4. 방문 완료!
+					visit[nr][nc] = true;
+
+					// 5. 이따 얘 가지고 또 인접 위치 방문해야하니까 다시 큐에 꾸깃 넣는다
+					remain.offer(new Pos(nr, nc));
+
+					// 6. 방문한 빙산개수 세려고 cnt를 ++해줌.
+					cnt++;
+				}
 			}
-			if (!zeros)
-				return false;
 		}
-		return true;
+		// 7. 빙산 개수 = 방문개수? ㅇㅋ이어짐 : 앗 분리됨
+		return icebergCnt == cnt ? true : false;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -102,21 +127,33 @@ public class BOJ_2573_Iceberg_Queue {
 
 				// 정수가 들어오면 q에 위치정보 저장 : 나중에 탐색할 필요 없게
 				if (map[i][j] != 0) {
-					q.offer(new Pos(i, j, map[i][j]));
+					queue.offer(new Pos(i, j, map[i][j]));
 				}
 			}
 		}
-		boolean flag = false;
-		while (!q.isEmpty()) {
-			if (!isCombined()) {
-				flag = true;
+		while (true) {
+
+			// 1. 큐가 비었다! = 중간에 break 안 걸리고 빙산이 다 녹을 때까지 반복했다 -> 0 출력
+			if (queue.isEmpty()) {
+				year = 0;
 				break;
 			}
+
+			// 2. 분리돼버렸다! -> 브레이크!
+			if (!isCombined()) {
+				break;
+			}
+
+			// 3. 큐를 한 바퀴 돌 때마다 1년씩 ++
 			year++;
-			int size = q.size();
+			int size = queue.size();
+
+			// 4. 큐 안에 있는 빙산들의 ice, 높이 정보를 일단 업데이트.
 			for (int k = 0; k < size; k++) {
 				int zeros = 0;
-				Pos tmp = q.poll();
+
+				// 한 개씩 뽑아서 인접위치에 바다 있는지 확인, 바다인 칸 개수 세서 zeros++
+				Pos tmp = queue.poll();
 				for (int i = 0; i < 4; i++) {
 					int nr = tmp.r + dr[i];
 					int nc = tmp.c + dc[i];
@@ -125,9 +162,15 @@ public class BOJ_2573_Iceberg_Queue {
 						continue;
 					zeros++;
 				}
+
+				// 6. 높이인 ice를 업데이트만 하고 큐에서 없애지 않는다!! 맵도 0으로 미리 바꾸지 않는다!!
 				tmp.ice -= zeros > tmp.ice ? tmp.ice : zeros;
-				q.offer(tmp);
+
+				// 7. 그대로 다시 큐에 넣어줌
+				queue.offer(tmp);
 			}
+
+			// 8. 한 바퀴 다 돌았다! -> 이제 빙산 일괄적으로 높이 조정. 큐에서 ice가 0인 빙산들을 맵에서도 0으로 바꿔준다.
 			makeZero();
 		}
 
