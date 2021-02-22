@@ -1,4 +1,4 @@
-package permutation_combination;
+package string;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
