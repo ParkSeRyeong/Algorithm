@@ -19,7 +19,7 @@ public class MyThreadEx2 extends Thread{
 			}catch(InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		}	
 	}
 
 	

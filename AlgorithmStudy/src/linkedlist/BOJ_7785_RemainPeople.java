@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -15,7 +16,8 @@ public class BOJ_7785_RemainPeople {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		TreeMap<String, String> map = new TreeMap<>();
+		// 와 바로 역순 가능가능 
+		TreeMap<String, String> map = new TreeMap<>(Comparator.reverseOrder());
 
 		int N = Integer.parseInt(br.readLine());
 		for (int i = 0; i < N; i++) {
@@ -29,9 +31,10 @@ public class BOJ_7785_RemainPeople {
 			}
 		}
 
-		Set<String> keyset = map.keySet();
+		//Set<String> keyset = map.keySet();
 
-		Iterator<String> iter = map.descendingKeySet().iterator();
+		//Iterator<String> iter = map.descendingKeySet().iterator();
+		Iterator<String> iter = map.keySet().iterator();
 
 		while(iter.hasNext()) {
 			bw.write(String.valueOf(iter.next()));

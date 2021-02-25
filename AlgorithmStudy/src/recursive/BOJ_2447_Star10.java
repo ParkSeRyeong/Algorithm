@@ -11,9 +11,14 @@ public class BOJ_2447_Star10 {
 	static char[][] arr;
 
 	public static void star(int n, int r, int c) {
+		
+		// 3*3 배열이 되면 별 찍기
+		// 포문 안 쓰고! 수정해보기
 		if (n / 3 == 1) {
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 3; j++) {
+					
+					// 가운데는 스킵
 					if (i == 1 && j == 1) {
 						continue;
 					}
@@ -22,8 +27,11 @@ public class BOJ_2447_Star10 {
 			}
 			return;
 		}
+		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
+				
+				// 가운데는 스킵
 				if (i == 1 && j == 1) {
 					continue;
 				} else {
@@ -39,6 +47,8 @@ public class BOJ_2447_Star10 {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int N = Integer.parseInt(br.readLine());
+		
+		// 굳이 캐릭터 쓸 일이 읍다. 불리안으로도 할 수 이따.
 		arr = new char[N][N];
 		for (int i = 0; i < N; i++) {
 			Arrays.fill(arr[i], ' ');

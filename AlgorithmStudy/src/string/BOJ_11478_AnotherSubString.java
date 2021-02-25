@@ -12,6 +12,7 @@ public class BOJ_11478_AnotherSubString {
 	static char[] arr;
 	static int cnt = 0;
 	static HashMap<String, Integer> map = new HashMap<>();
+	// 해시set은 String만 넣을 수 있음...! 원소 하나만!!!!! 굳이 해시맵 안 써도 됨!
 
 	public static void main(String[] args) throws IOException {
 
