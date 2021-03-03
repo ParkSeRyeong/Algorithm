@@ -70,15 +70,19 @@ public class BOJ_14888_Calculate {
 
 		oper = new int[N - 1];
 		String[] tmp = br.readLine().split(" ");
+		
 		int index = 0;
 		int operatorIdx = -1;
+		
 		for (int i = 0; i < 4; i++) {
+			
 			for (int j = 0; j < Integer.parseInt(tmp[i]); j++) {
 				oper[index] = operatorIdx;
 				index++;
 			}
 			operatorIdx--;
 		}
+		
 		permutation(0, new int[oper.length], new boolean[oper.length]);
 		bw.write(String.valueOf(Max)+"\n");
 		bw.write(String.valueOf(Min));

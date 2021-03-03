@@ -12,52 +12,24 @@ public class BOJ_5525_IOIOI {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int N = Integer.parseInt(br.readLine());
-		int pLen = 2 * N + 1;
-		char[] original = new char[pLen];
-
-		for (int i = 0; i < pLen; i++) {
-			if (i % 2 == 0) {
-				original[i] = 'I';
-			} else {
-				original[i] = 'O';
-			}
-		}
 		int strLen = Integer.parseInt(br.readLine());
 		String str = br.readLine();
-		int cnt = 0;
 
-		int index = 0;
-		while (index < strLen) {
+		int num = 0;
+		int answer = 0;
 
-			boolean flag = true;
-			int rightLen = 0;
-//		-----------------------------------------------------
-			//System.out.println("\t*** "+index+" ***");
-			for (int i = 0; i < pLen; i++) {
-				//System.out.println("----------- "+i+" -------------");
-				if (index + i >= strLen)
-					break;
-				// 다르면?
-				if (str.charAt(index + i) != original[i]) {
-					if (i == 0)
-						index++;
-					else
-						index += i;
-					flag = false;
-					//System.out.println("\t탈락");
-					break;
+		for (int i = 0; i < strLen - 2; i++) {
+			if (str.charAt(i) == 'I' && str.charAt(i + 1) == 'O' && str.charAt(i + 2) == 'I') {
+				num++;
+				i++;
+				if (num == N) {
+					answer++;
+					num--;
 				}
-				rightLen++;
-			}
-//		-----------------------------------------------------
-			if (flag) {
-				//System.out.println("일치 인덱스 : "+index);
-				index += 2;
-				if (rightLen == pLen)
-					cnt++;
-			}
+			} else
+				num = 0;
 		}
-		bw.write(String.valueOf(cnt));
+		bw.write(String.valueOf(answer));
 		bw.flush();
 		bw.close();
 		br.close();
