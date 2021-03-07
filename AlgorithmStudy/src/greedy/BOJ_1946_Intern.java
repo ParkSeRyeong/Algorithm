@@ -32,7 +32,11 @@ public class BOJ_1946_Intern {
 					score = arr[i];
 				}
 			}
-			System.out.println(cnt);
+			sb.append(cnt).append("\n");
 		}
+		bw.write(sb.toString());
+		bw.flush();
+		bw.close();
+		br.close();
 	}
 }

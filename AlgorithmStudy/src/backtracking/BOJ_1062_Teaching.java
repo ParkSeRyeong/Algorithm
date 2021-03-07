@@ -63,9 +63,9 @@ public class BOJ_1062_Teaching {
 			visited['c' - 'a'] = true;
 
 			for (int i = 0; i < N; i++) {
-				String str = br.readLine();
-				word[i] = str;
+				String str = br.readLine();				
 				str = str.substring(4, str.length() - 4);
+				word[i] = str;
 				for (int j = 0; j < str.length(); j++) {
 					if (!visited[str.charAt(j) - 'a']) {
 						visited[str.charAt(j) - 'a'] = true;
@@ -82,6 +82,7 @@ public class BOJ_1062_Teaching {
 					idx++;
 				}
 			}
+			
 			if (K - 5 > words_cnt)
 				combi(exist, K - 5, 0, new char[words_cnt], 0);
 
