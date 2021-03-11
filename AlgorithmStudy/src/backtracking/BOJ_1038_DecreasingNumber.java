@@ -8,50 +8,41 @@ import java.util.Queue;
 
 public class BOJ_1038_DecreasingNumber {
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		// Queue<Integer> q = new LinkedList<Integer>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		Queue<Integer> q = new LinkedList<Integer>();
+		Queue<Long> q = new LinkedList<Long>();
 
-		// 현재 cnt는 10. 시작.
 		long n = Integer.parseInt(br.readLine());
-		if (n < 10) {
-			System.out.println(n);
+		
+		// 10이하 = 그냥 그 숫자 출력 / 1022 이상 = -1 출력
+		if(n<10||n>1022) {
+			System.out.println(n<10?n:-1);
 			return;
 		}
-
+		
 		int cnt = 0;
-		for (int i = 0; i < 10; i++) {
+		for (long i = 0; i < 10; i++) {
 			q.offer(i);
 			cnt++;
 		}
-		int len = 10;
-		for (int k = 0; k < 6; k++) {	
+		for (int k = 0; k < 9; k++) {
+			
+			// 현재 큐 크기만큼 돌릴 거임
 			int size = q.size();
-
 			for (int i = 0; i < size; i++) {
-				long end = q.peek();
-				while (end / 10 > 0) {
-					end %= 10;
-				}
-
-				for (int j = 0; j < end; j++) {
+				for (int j = 0; j < q.peek() % 10; j++) {
 					if (cnt == n) {
-						System.out.println(q.peek() * len + j);
+						System.out.print((q.peek() * 10 + j));
 						return;
 					}
-					System.out.print(q.peek() * len + j + " ");
-					q.offer(q.peek() * len + j);
-					if (end == 0 && cnt == n) {
-						System.out.print(q.peek() * len+" ");
+					
+					q.offer(q.peek() * 10 + j);
+					if (q.peek() % 10 == 0 && cnt == n) {
+						System.out.print(q.peek() * 10 + " ");
 						return;
 					}
-					cnt++;
-				}
-				System.out.println();
+					cnt++;	}
 				q.poll();
 			}
 		}
-
-		System.out.println(-1);
 	}
 }
