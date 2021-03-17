@@ -9,7 +9,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class BOJ_17471_GarryMendering {
+/*
+ * DFS를 사용해 풀이.
+ * 부분집합을 구해줌.
+ * 대신 visit[cnt] = true 이렇게 대신 구역 번호인 1과 2를 넣어줌.
+ * 부분집합이 구해지면 집합을 check 함수를 통해 몇 개 구역으로 나눠져있는지 count한 후
+ * 그 count가 2라면 각 구역 합의 차이가 가장 작을 때를 구해줌.
+ * 
+ * */
+public class BOJ_17471_Garymedering {
 	static int total = 0;
 	static int Min = Integer.MAX_VALUE;
 	static int[] people;
@@ -18,11 +26,12 @@ public class BOJ_17471_GarryMendering {
 	static boolean[] visited;
 	static int N;
 
+	// cnt : 부분집합 구할 때 현재 인덱스
+	// areaNum : 1구역의 수
+	// areaSum : 1구역의 합
 	public static void dfs(int cnt, int areaNum, int areaSum) {
 		if (cnt == N + 1) {
-			// System.out.println(Arrays.toString(area));
 			// 1구역과 2구역의 수를 각각 센당.
-			int area1 = areaNum, area2 = N - areaNum;
 
 			visited = new boolean[N + 1];
 
@@ -30,13 +39,12 @@ public class BOJ_17471_GarryMendering {
 			for (int i = 1; i <= N; i++) {
 				if (!visited[i]) {
 					// 이 check 함수를 거치고 나면 그랑 연결된 구역이 visit됨.
+					// 즉, 한 번 돌고나면 한 구역을 전체 탐색한 셈이므로 구역수인 rs를 하나 증가시킨다.
 					check(i, area[i]);
-					// System.out.println("\t"+Arrays.toString(visited));
 					rs++;
 				}
 			}
-			// System.out.println("\t"+rs);
-			// rs가 2가 아니라면 -> 구역이 제대로 나눠진게 아니란 뜻.
+			// rs가 2가 아니라면 -> 구역이 제대로 나눠진게 아니란 뜻. 2여야 딱 2구역으로 나눠진 것이다.
 			if (rs == 2) {
 				Min = Math.min(Min, Math.abs((total - areaSum) - areaSum));
 			}
@@ -50,7 +58,7 @@ public class BOJ_17471_GarryMendering {
 	}
 
 	private static void check(int index, int belongArea) {
-		// index : 현재 연결된 다른 구역을 찾으려는 구역.
+		// index : 현재 구역. 이 구역과 연결된 다른 구역을 찾을 것.
 		// 2-1,2,5,6 인 상태에서, index = 2라고 해보자.
 		visited[index] = true;
 

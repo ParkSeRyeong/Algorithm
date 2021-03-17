@@ -7,16 +7,28 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-public class BOJ_17070_Pipe1 {
+/*
+ * dfs? 빡코딩?
+ * moving이란 함수를 이용해 재귀적으로 풂.
+ * 인수로 방향을 가리키는 dir, 파이프의 "끝"점을 가리키는 r과 c를 넘겨줌.
+ * dir: 0 = 가로로 이동 / dir: 1 = 대각선으로 이동 / dir: 2 = 세로로 이동
+ * 각 방향에 맞게 이동할 수 있는 위치로 재귀적으로 함수를 넘겨줌.
+ * dp로 개선하면 좋을 듯함.
+ * 
+ * */
+public class BOJ_17070_Pipe {
 	static int cnt = 0;
 
 	public static void moving(int dir, int r, int c, int[][] map) {
+		// 범위 아웃이거나 장애물이 있는 경우 return.
 		if (r > map.length - 1 || c > map.length - 1 || map[r][c] == 1) {
 			return;
 		}
+		// 대각선은 조건이 까다롭길래 그냥 if문으로 하나 빼줬습니다.
 		if (dir % 3 == 1 && (map[r - 1][c] == 1 || map[r][c - 1] == 1)) {
 			return;
 		}
+		// 끝까지 도착했다면 정답 cnt 하나 증가.
 		if (r == map.length - 1 && c == map.length - 1) {
 			cnt++;
 			return;
