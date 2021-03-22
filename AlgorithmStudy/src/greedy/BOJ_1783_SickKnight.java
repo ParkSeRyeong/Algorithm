@@ -26,3 +26,4 @@ public class BOJ_1783_SickKnight {
 		br.close(); bw.flush(); bw.close(); 
 		}
 }
+	

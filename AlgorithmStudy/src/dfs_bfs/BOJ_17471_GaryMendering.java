@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
  * 그 count가 2라면 각 구역 합의 차이가 가장 작을 때를 구해줌.
  * 
  * */
-public class BOJ_17471_Garymedering {
+public class BOJ_17471_GaryMendering {
 	static int total = 0;
 	static int Min = Integer.MAX_VALUE;
 	static int[] people;
