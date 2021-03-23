@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
-public class JO_1681_Hamilton_circuit_DP {
+public class NOT_JO_1681_Hamilton_circuit_DP {
 	static int[][] dp;
 	static int[][] dist;
 	static int N;
