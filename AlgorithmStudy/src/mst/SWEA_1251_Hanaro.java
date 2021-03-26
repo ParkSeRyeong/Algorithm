@@ -48,6 +48,7 @@ public class SWEA_1251_Hanaro {
 
 			for (int i = 0; i < N - 1; i++) {
 				for (int j = i + 1; j < N; j++) {
+					// int곱하기 int에서 오버플로우 나면 어쩔래 임마
 					long dist = ((x[i] - x[j]) * (x[i] - x[j])) + ((y[i] - y[j]) * (y[i] - y[j]));
 					adj[i][j] = dist;
 					adj[j][i] = dist;
