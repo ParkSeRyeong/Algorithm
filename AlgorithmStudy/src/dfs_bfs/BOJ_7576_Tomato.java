@@ -1,4 +1,4 @@
-package stack_queue;
+package dfs_bfs;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
