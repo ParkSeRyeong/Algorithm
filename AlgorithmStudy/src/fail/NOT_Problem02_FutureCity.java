@@ -1,4 +1,4 @@
-package dfs_bfs;
+package fail;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

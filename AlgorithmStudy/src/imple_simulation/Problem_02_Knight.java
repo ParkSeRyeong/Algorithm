@@ -1,4 +1,4 @@
-package implementation;
+package imple_simulation;
 
 import java.io.IOException;
 import java.util.Scanner;
