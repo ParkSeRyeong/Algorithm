@@ -28,26 +28,26 @@ public class BOJ_1747_소수n팰린드롬 {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N=Integer.parseInt(br.readLine());
+		int N = Integer.parseInt(br.readLine());
 
 		boolean[] primes = getPrimes();
 
 		Iterator<Integer> it = list.iterator();
 		while (it.hasNext()) {
-			int now=it.next();
-			String str = String.valueOf(now);
-			boolean flag=true;
+			int now = it.next();
+			String str = Integer.toString(now);
+			boolean flag = true;
 			for (int i = 0; i < str.length() / 2; i++) {
-				if(str.charAt(i)!=str.charAt(str.length()-i-1)) {
-					flag=false;
+				if (str.charAt(i) != str.charAt(str.length() - i - 1)) {
+					flag = false;
 					break;
 				}
 			}
-			if(flag && now>=N) {
+			if (flag && now >= N) {
 				System.out.println(now);
 				return;
 			}
-			
+
 		}
 		System.out.println(list.size());
 	}

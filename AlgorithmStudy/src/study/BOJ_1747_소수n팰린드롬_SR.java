@@ -7,48 +7,74 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class BOJ_1747_소수n팰린드롬_SR {
-	static ArrayList<Integer> list = new ArrayList<>();
 
 	public static boolean[] getPrimes() {
-		boolean[] primes = new boolean[1003002];
+		boolean[] primes = new boolean[10000000];
 		primes[1] = true;
+		primes[0] = true;
 
-		for (int i = 2; i < 1003002; ++i) {
+		for (int i = 2; i < 10000000; ++i) {
 			if (primes[i])
 				continue; // 소수가 아닌(true) 수는 넘어가기
-
-			for (int j = i + i; j < 1003002; j += i) { // i를 제외한 i의 배수 모두 체크하기
+			for (int j = i + i; j < 10000000; j += i) { // i를 제외한 i의 배수 모두 체크하기
 				primes[j] = true;
 			}
-			list.add(i);
 		}
-
 		return primes;
 	}
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N=Integer.parseInt(br.readLine());
+
+		int N = Integer.parseInt(br.readLine());
+		ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
 		boolean[] primes = getPrimes();
 
-		Iterator<Integer> it = list.iterator();
-		while (it.hasNext()) {
-			int now=it.next();
-			String str = String.valueOf(now);
-			boolean flag=true;
-			for (int i = 0; i < str.length() / 2; i++) {
-				if(str.charAt(i)!=str.charAt(str.length()-i-1)) {
-					flag=false;
-					break;
+		for (int i = 0; i < 7; i++) {
+			list.add(new ArrayList<>());
+		}
+
+		list.get(0).add(0);
+		for (int i = 1; i < 10; i++) {
+			list.get(0).add(i);
+			list.get(1).add(i * 10 + i);
+		}
+		if (N < 100) {
+			for (ArrayList i : list) {
+				Iterator<Integer> it = i.iterator();
+				while (it.hasNext()) {
+					int ans = it.next();
+					if (ans >= N && !primes[ans]) {
+						System.out.print(ans);
+						return;
+					}
 				}
 			}
-			if(flag && now>=N) {
-				System.out.println(now);
-				return;
-			}
-			
 		}
-		System.out.println(list.size());
+
+		for (int i = 2; i < 7; i++) {
+
+			for (int j = 1; j < 10; j++) {
+				if (i % 2 == 0) {
+					for (int k = 0; k < 10; k++) {
+						int tmp = (int) (j * Math.pow(10, i) + (k * Math.pow(10, i / 2))) + j;
+						if (tmp >= N && !primes[tmp]) {
+							System.out.println(tmp);
+							return;
+						}
+						list.get(i).add(tmp);
+					}
+				}
+				for (int k : list.get(i - 2)) {
+					int num = (int) (j * Math.pow(10, i)) + k * 10 + j;
+					if (num >= N && !primes[num]) {
+						System.out.println(num);
+						return;
+					}
+					list.get(i).add(num);
+				}
+			}
+		}
 	}
 }
