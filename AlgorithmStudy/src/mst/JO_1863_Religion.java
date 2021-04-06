@@ -42,7 +42,7 @@ public class JO_1863_Religion {
 		int m = Integer.parseInt(st.nextToken());
 		students = new int[N + 1];
 		bs = new BitSet(N + 1);
-		
+
 		makeSet();
 		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -50,9 +50,10 @@ public class JO_1863_Religion {
 			int b = Integer.parseInt(st.nextToken());
 			unionSet(a, b);
 		}
-		int cnt=0;
-		for(int i=0;i<N+1;i++) {
-			if(bs.get(i)) cnt++;
+		int cnt = 0;
+		for (int i = 0; i < N + 1; i++) {
+			if (bs.get(i))
+				cnt++;
 		}
 		System.out.println(cnt);
 	}
