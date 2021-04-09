@@ -1,11 +1,11 @@
-package study;
+package imple_simulation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 
-public class BOJ_12904_A와B_BruteForce {
+public class BOJ_12904_A와B_재귀 {
 	static HashSet<String>set=new HashSet<>();
 	static boolean flag=false;
 	

@@ -1,4 +1,4 @@
-package study;
+package imple_simulation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class BOJ_3190_뱀2 {
 			r = q.peek().r;
 			c = q.peek().c;
 			int nr = r + dr[flag];
-			int nc = c + dc[flag];
+			int nc = c + dc[flag]; 
 			if (nr < 1 || nc < 1 || nr > N || nc > N || map[nr][nc] == 1) {
 				System.out.println(sec);
 				return;

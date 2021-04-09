@@ -1,11 +1,11 @@
-package study;
+package imple_simulation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 
-public class BOJ_12904_A와B_2 {
+public class BOJ_12904_A와B_거꾸로 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();

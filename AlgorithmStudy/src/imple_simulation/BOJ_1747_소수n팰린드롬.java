@@ -1,4 +1,4 @@
-package study;
+package imple_simulation;
 
 import java.io.BufferedReader;
 import java.io.IOException;

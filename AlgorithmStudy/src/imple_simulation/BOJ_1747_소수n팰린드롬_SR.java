@@ -1,4 +1,4 @@
-package study;
+package imple_simulation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,6 +56,8 @@ public class BOJ_1747_소수n팰린드롬_SR {
 		for (int i = 2; i < 7; i++) {
 
 			for (int j = 1; j < 10; j++) {
+				
+				// 길이가 짝수
 				if (i % 2 == 0) {
 					for (int k = 0; k < 10; k++) {
 						int tmp = (int) (j * Math.pow(10, i) + (k * Math.pow(10, i / 2))) + j;
@@ -63,9 +65,11 @@ public class BOJ_1747_소수n팰린드롬_SR {
 							System.out.println(tmp);
 							return;
 						}
-						list.get(i).add(tmp);
+						list.get(i).add(tmp); 
 					}
 				}
+				
+				// 길이가 홀수
 				for (int k : list.get(i - 2)) {
 					int num = (int) (j * Math.pow(10, i)) + k * 10 + j;
 					if (num >= N && !primes[num]) {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * @author taeheekim
  */
-public class String_KMPTest {
+public class BOJ_16916_부분문자열_KMP {
 	public static void main(String[] args) throws Exception {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		char[] text = in.readLine().toCharArray();
