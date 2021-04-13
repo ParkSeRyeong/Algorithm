@@ -94,6 +94,11 @@ public class 활주로 {
 		}
 	}
 
+	public static void airstrip2() {
+		// 다시 짜기.
+	}
+	
+	
 	// 반 노가다성으로 짰습니다....
 	// 겹치면 안 된다는 조건을 놓쳤는데 시간이 모자라서 제출합니다ㅠㅠ!
 	public static void main(String[] args) throws IOException {

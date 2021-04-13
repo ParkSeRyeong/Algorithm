@@ -18,7 +18,7 @@ public class BOJ_2234_성곽 {
 	static int area_num = 1;
 	static ArrayList<Integer> list = new ArrayList<>();
 	static boolean[][] adj;
-	static int max_room_size=Integer.MIN_VALUE;
+	static int max_room_size = Integer.MIN_VALUE;
 
 	public static void bfs(int sr, int sc) {
 		Queue<int[]> q = new LinkedList<>();
@@ -57,7 +57,7 @@ public class BOJ_2234_성곽 {
 				cnt++;
 			}
 		}
-		max_room_size=Math.max(max_room_size, cnt);
+		max_room_size = Math.max(max_room_size, cnt);
 		list.add(cnt);
 		++area_num;
 	}
@@ -104,11 +104,11 @@ public class BOJ_2234_성곽 {
 		for (int i = 0; i < area_num - 1; i++) {
 			for (int j = i; j < area_num; j++) {
 				if (list.get(i) + list.get(j) > max_area && adj[i][j]) {
-					max_area=list.get(i)+list.get(j);
+					max_area = list.get(i) + list.get(j);
 				}
 			}
 		}
-		System.out.println(area_num-1);
+		System.out.println(area_num - 1);
 		System.out.println(max_room_size);
 		System.out.println(max_area);
 	}
