@@ -17,7 +17,7 @@ public class BOJ_5430_AC {
 
 			// 2. 정수의 개수 / 정수배열
 			int N = Integer.parseInt(br.readLine());
-			StringTokenizer st = new StringTokenizer(br.readLine(), ",|\\[|\\]|,");
+			StringTokenizer st = new StringTokenizer(br.readLine(), "\\[|\\]|,");
 			// 3. 0개면 그냥 D있으면 error, 없으면 [] 출력.
 			if (N == 0) {
 				if (func.contains("D")) {
