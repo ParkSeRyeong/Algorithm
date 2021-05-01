@@ -44,6 +44,7 @@ public class BOJ_5430_AC {
 			tp[0] = 0;
 			tp[1] = N - 1;
 
+			
 			int now = 0;
 			for (int i = 0; i < func.length(); i++) {
 
@@ -68,6 +69,7 @@ public class BOJ_5430_AC {
 			}
 
 			// 마지막에 다 지워서 길이가 0일 때 에러남. 그거 방지하려고 if문 하나 넣어줌.
+			BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(System.out));
 			sb.append("[");
 			if (tp[0] <= tp[1]) {
 				if (now == 0) {
@@ -84,6 +86,5 @@ public class BOJ_5430_AC {
 			sb.append("]\n");
 		}
 		System.out.println(sb);
-
 	}
 }

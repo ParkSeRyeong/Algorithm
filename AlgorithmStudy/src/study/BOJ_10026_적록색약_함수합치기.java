@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BOJ_10026_적록색약 {
+public class BOJ_10026_적록색약_함수합치기 {
 	static int N;
 	static char[][] map;
 	static boolean[][] check;
@@ -87,6 +87,7 @@ public class BOJ_10026_적록색약 {
 
 		map = new char[N][N];
 		check = new boolean[N][N];
+		
 		for (int i = 0; i < N; i++) {
 			map[i] = br.readLine().toCharArray();
 		}
