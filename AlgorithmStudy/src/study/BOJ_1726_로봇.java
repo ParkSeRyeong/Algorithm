@@ -26,12 +26,6 @@ public class BOJ_1726_로봇 {
 			this.dir = dir;
 			this.order = order;
 		}
-
-		@Override
-		public String toString() {
-			return r + " " + c + " " + dir + " " + order;
-		}
-
 	}
 
 	public static int switchDir(int n) {
@@ -51,10 +45,6 @@ public class BOJ_1726_로봇 {
 		// 동남서북 : 오른쪽으로 회전
 		int[] dr = { 0, 1, 0, -1 };
 		int[] dc = { 1, 0, -1, 0 };
-		
-//		int[] dr = {0, 0, 1, -1};
-//		int[] dc = {1, -1, 0, 0};
-		
 		int min = Integer.MAX_VALUE;
 
 		// 출발, 도착지
@@ -108,32 +98,6 @@ public class BOJ_1726_로봇 {
 				visit[r][c][right] = true;
 				q.add(new pos(r, c, right, order + 1));
 			}
-//			for (int i = 1; i <= 4; i++) {
-//				if (dir != i && !visit[r][c][i]) {
-//					int turn = 1;
-//					if (dir == 1) {
-//						if (i == 2) {
-//							turn++;
-//						}
-//					} else if (dir == 2) {
-//						if (i == 1) {
-//							turn++;
-//						}
-//					} else if (dir == 3) {
-//						if (i == 4) {
-//							turn++;
-//						}
-//					} else {
-//						if (i == 3) {
-//							turn++;
-//						}
-//					}
-//
-//					visit[r][c][i] = true;
-//					q.add(new pos(r, c, i, order + turn));
-//				}
-//			}
-//
 		}
 		System.out.println(min);
 	}
