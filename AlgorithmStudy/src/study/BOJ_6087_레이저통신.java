@@ -10,115 +10,108 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_6087_레이저통신 {
-	static int N, M, empty, virus_cnt;
-	static int result = Integer.MAX_VALUE;
-	static ArrayList<pos> list;
-	static int[][] map;
+	static int W, H;
 
-	private static class pos {
-		int r, c;
+	private static class pos implements Comparable<pos> {
+		int r, c, dir, mirror;
 
-		public pos(int r, int c) {
+		public pos(int r, int c, int dir, int mirror) {
 			this.r = r;
 			this.c = c;
+			this.dir = dir;
+			this.mirror = mirror;
 		}
 
 		@Override
 		public String toString() {
-			return r + "," + c;
+			return r + "," + c + " / 방향 " + dir + " / 거울 " + mirror + "개";
 		}
 
-	}
-
-	public static void combi(int start, int count, boolean[] check) {
-		if (count == M) {
-			// 방문 배열 만들어서 -1로 채워주기.
-			int[][] visit = new int[N][N];
-			for (int i = 0; i < N; i++) {
-				Arrays.fill(visit[i], -1);
-			}
-			Queue<pos> q = new LinkedList<>();
-			for (int i = 0; i < virus_cnt; i++) {
-				// 뽑힌 활성화 바이러스들의 위치를 큐에 넣어서 BFS를 돌릴 것!
-				if (check[i]) {
-					pos cur = list.get(i);
-					q.offer(new pos(cur.r, cur.c));
-					visit[cur.r][cur.c] = 0;
-				}
-			}
-			BFS(visit, q);
-			return;
-		}
-
-		for (int i = start; i < virus_cnt; i++) {
-			if (!check[i]) {
-				check[i] = true;
-				combi(i + 1, count + 1, check);
-				check[i] = false;
-			}
+		@Override
+		public int compareTo(pos o) {
+			return this.mirror - o.mirror;
 		}
 	}
 
-	private static void BFS(int[][] visit, Queue<pos> q) {
+	private static void BFS(pos start, pos end, char[][] map, int[][] visit) {
 		int[] dr = { -1, 1, 0, 0 };
 		int[] dc = { 0, 0, -1, 1 };
-		int virus = 0;
-		int time = 0;
+		// PriorityQueue로 하면 훨씬 짧아진다!
+		PriorityQueue<pos> q = new PriorityQueue<>();
+		
+		/* ------- 시작할 때 일단 사방으로 넣어준다 --------- */
+		for (int i = 0; i < 4; i++) {
+			// 시작 위치 + 사방 방향을 넣어준다!
+			// 거울 개수는 당연히 0개.
+			q.offer(new pos(start.r, start.c, i, 0));
+		}
+		visit[start.r][start.c] = 0;
 
 		while (!q.isEmpty()) {
 			pos now = q.poll();
+			if (now.r == end.r && now.c == end.c)
+				break;
+
 			for (int i = 0; i < 4; i++) {
 				int nr = now.r + dr[i];
 				int nc = now.c + dc[i];
+				int mirror = now.mirror;
 
-				if (nr < 0 || nc < 0 || nr > N - 1 || nc > N - 1)
+				// 1. 유효 범위 / 벽 여부 판단
+				if (nr < 0 || nc < 0 || nr > H - 1 || nc > W - 1 || map[nr][nc] == '*')
 					continue;
 
-				// 위치가 벽이 아니고 방문을 아직 안 했다면
-				if (map[nr][nc] != 1 && visit[nr][nc] == -1) {
-					visit[nr][nc] = visit[now.r][now.c] + 1;
-					q.offer(new pos(nr, nc));
+				// 2. 현재 판단중인 이동할 방향(i)이 dir과 다르다면 = 거울 필요
+				if (now.dir != i) {
+					mirror += 1;
+				}
 
-					// 빈 칸일 때만 감염시간을 증가시켜야됨!
-					if (map[nr][nc] == 0) {
-						++virus;
-						time = visit[nr][nc];
+				// 3. 방문 안 했거나(MAX VALUE), 방문 했는데 거울 갯수가 많다면
+				if (visit[nr][nc] >= mirror) {
+					visit[nr][nc] = mirror;
+					q.offer(new pos(nr, nc, i, mirror));
+				}
+			}
+		}
+		System.out.println(visit[end.r][end.c]);
+	}
+
+	public static void main(String[] args) throws IOException {
+		System.setIn(new FileInputStream("src/study/레이저통신_test.txt"));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		W = Integer.parseInt(st.nextToken());
+		H = Integer.parseInt(st.nextToken());
+		char[][] map = new char[H][W];
+		int[][] visit = new int[H][W];
+		pos start = null;
+		pos end = null;
+		boolean flag = false;
+
+		/* ----------- 입력부 --------------- */
+		for (int i = 0; i < H; i++) {
+			String tmp = br.readLine();
+			for (int j = 0; j < W; j++) {
+				visit[i][j] = Integer.MAX_VALUE;
+				map[i][j] = tmp.charAt(j);
+				if (map[i][j] == 'C') {
+					if (!flag) {
+						// 처음에 들어오는 'C'는 시작 위치로
+						start = new pos(i, j, 0, 0);
+						flag = !flag;
+					} else {
+						// 그 다음 'C'는 끝 위치로
+						end = new pos(i, j, 0, 0);
 					}
 				}
 			}
 		}
-		// 감염시킨 바이러스가 빈 공간 수랑 똑같다면
-		if (virus == empty) {
-			result = Math.min(result, time);
-		}
-	}
-
-	public static void main(String[] args) throws IOException {
-		System.setIn(new FileInputStream("src/study/연구소3_test.txt"));
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		map = new int[N][N];
-		list = new ArrayList<>();
-
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < N; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken());
-				if (map[i][j] == 2) {
-					list.add(new pos(i, j));
-					++virus_cnt;
-				} else if (map[i][j] == 0) {
-					++empty;
-				}
-			}
-		}
-		combi(0, 0, new boolean[virus_cnt]);
-		System.out.println(result == Integer.MAX_VALUE ? -1 : result);
+		/* ----------- 실행부 --------------- */
+		BFS(start, end, map, visit);
 	}
 }
