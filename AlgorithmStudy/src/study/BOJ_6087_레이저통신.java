@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_6087_레이저통신 {
 	static int W, H;
-
+	 
 	private static class pos implements Comparable<pos> {
 		int r, c, dir, mirror;
 

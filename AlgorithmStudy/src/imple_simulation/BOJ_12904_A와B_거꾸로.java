@@ -20,14 +20,14 @@ public class BOJ_12904_A와B_거꾸로 {
 		while (cnt != S.length()) {
 			--cnt;
 
-			if (sb.charAt(sb.length() - 1) == 'A') {
-				sb.deleteCharAt(sb.length() - 1);
+			if (sb.charAt(0) == 'A') {
+				sb.deleteCharAt(0);
 			} else {
-				sb.deleteCharAt(sb.length() - 1);
+				sb.deleteCharAt(0);
 				sb.reverse();
 			}
 		}
-		System.out.println(sb.toString().equals(S) ? 1 : 0);
+		System.out.println(sb.toString().equals(S) ? "SUCCESS" : "FAIL");
 
 		br.close();
 	}

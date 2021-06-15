@@ -25,7 +25,7 @@ public class BOJ_1240_노드사이의거리_DFS {
 	public static void dfs(int start, int end, int sum, boolean[] visit) {
 		visit[start] = true;
 		if (start == end) {
-			ans = Math.min(ans, sum);
+			ans = Math.min(ans, sum);	// 트리로 이뤄진 구조라 min 안 해줘도 됨
 			return;
 		}
 
