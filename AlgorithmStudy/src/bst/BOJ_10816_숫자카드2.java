@@ -6,22 +6,34 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class BOJ_10816_숫자카드2 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		HashMap<Integer, Integer> map = new HashMap<>();
 
-		int tc = Integer.parseInt(br.readLine());
-		for (int t = 0; t < tc; t++) {
-			int N = Integer.parseInt(br.readLine());
-			int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-			Arrays.sort(arr);
-			int M = Integer.parseInt(br.readLine());
-			int[] find = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+		int N = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		while (st.hasMoreTokens()) {
+			int now = Integer.parseInt(st.nextToken());
+			if (map.get(now) == null) {
+				map.put(now, 1);
+			} else {
+				map.put(now, map.get(now) + 1);
+			}
+		}
 
-			for (int i = 0; i < M; i++) {
-				bw.write(Arrays.binarySearch(arr, find[i]) >= 0 ? "1\n" : "0\n");
+		int M = Integer.parseInt(br.readLine());
+		int[] find = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+		for (int i : find) {
+			if (map.get(i) == null)
+				bw.write("0 ");
+			else {
+				bw.write(String.valueOf(map.get(i)));
+				bw.write(" ");
 			}
 		}
 		bw.flush();
