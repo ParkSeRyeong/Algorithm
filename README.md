@@ -1,2 +1,2 @@
-# SR_Coding
-깃린이입니다
+# Algorithm
+알고리즘 공부.
